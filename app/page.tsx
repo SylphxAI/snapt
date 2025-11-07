@@ -7,8 +7,8 @@ import { Icon } from '@iconify/react';
 const floatingOrb = css({
   position: 'absolute',
   borderRadius: '50%',
-  opacity: 0.6,
-  filter: 'blur(80px)',
+  opacity: 0.3,
+  filter: 'blur(120px)',
   pointerEvents: 'none',
   animation: 'float 15s ease-in-out infinite',
 });
@@ -16,8 +16,8 @@ const floatingOrb = css({
 const floatingOrbDelayed = css({
   position: 'absolute',
   borderRadius: '50%',
-  opacity: 0.6,
-  filter: 'blur(80px)',
+  opacity: 0.25,
+  filter: 'blur(120px)',
   pointerEvents: 'none',
   animation: 'float-delayed 15s ease-in-out infinite',
 });
@@ -35,7 +35,7 @@ const heroPulse = css({
   position: 'absolute',
   inset: 0,
   animation: 'pulse-slow 8s ease-in-out infinite',
-  background: 'radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3), transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.3), transparent 50%)',
+  background: 'radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.08), transparent 50%), radial-gradient(circle at 80% 80%, rgba(167, 139, 250, 0.08), transparent 50%)',
 });
 
 const gradientText = css({
@@ -109,9 +109,9 @@ export default function Home() {
           style={{
             top: '10%',
             left: '10%',
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.8), transparent)',
+            width: '600px',
+            height: '600px',
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%)',
           }}
         />
         <div
@@ -119,9 +119,9 @@ export default function Home() {
           style={{
             bottom: '10%',
             right: '10%',
-            width: '500px',
-            height: '500px',
-            background: 'radial-gradient(circle, rgba(236, 72, 153, 0.6), transparent)',
+            width: '700px',
+            height: '700px',
+            background: 'radial-gradient(circle, rgba(236, 72, 153, 0.15), transparent 70%)',
           }}
         />
       </div>
@@ -443,7 +443,7 @@ export default function Home() {
         }
 
         body {
-          background: linear-gradient(135deg, #0f0f23 0%, #1a0b2e 50%, #16001e 100%);
+          background: linear-gradient(135deg, #0a0a18 0%, #130b1f 50%, #0f0616 100%);
           min-height: 100vh;
         }
       `}</style>
