@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+bun.lockb
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Production
+dist/
+build/
+
+# Misc
+.DS_Store
+*.log
+.env
+.env.local
+.env.production.local
+.vercel
