@@ -22,11 +22,6 @@ export async function GET(request: NextRequest) {
 
     const features = featuresParam.split(',').map((f) => f.trim()).slice(0, 4);
 
-    // Load font
-    const fontData = await fetch(
-      new URL('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2')
-    ).then((res) => res.arrayBuffer());
-
     // Fetch GitHub stats if repo provided
     let repoData = null;
     if (repo && showStats) {
@@ -40,6 +35,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    const gradientBg = `linear-gradient(135deg, #${gradient[0]} 0%, #${gradient[1]} 100%)`;
+
     return new ImageResponse(
       (
         <div
@@ -49,8 +46,8 @@ export async function GET(request: NextRequest) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: `linear-gradient(135deg, #${gradient[0]} 0%, #${gradient[1]} 100%)`,
-            fontFamily: 'sans-serif',
+            background: gradientBg,
+            fontFamily: 'Inter, sans-serif',
           }}
         >
           <div
@@ -59,15 +56,13 @@ export async function GET(request: NextRequest) {
               borderRadius: '28px',
               padding: '64px 84px',
               width: '1136px',
-              height: '528px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
+              gap: '32px',
               border: '1px solid rgba(255, 255, 255, 0.4)',
               boxShadow: '0 30px 90px rgba(0, 0, 0, 0.25)',
             }}
           >
-            {/* Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
               <div
                 style={{
@@ -78,7 +73,7 @@ export async function GET(request: NextRequest) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '44px',
-                  background: `linear-gradient(135deg, #${gradient[0]} 0%, #${gradient[1]} 100%)`,
+                  background: gradientBg,
                   boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
                 }}
               >
@@ -88,128 +83,109 @@ export async function GET(request: NextRequest) {
                 style={{
                   fontSize: '76px',
                   fontWeight: 800,
-                  letterSpacing: '-0.04em',
-                  background: `linear-gradient(135deg, #${gradient[0]} 0%, #${gradient[1]} 100%)`,
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
+                  color: '#667eea',
                 }}
               >
                 {title}
               </div>
             </div>
 
-            {/* Tagline */}
             <div
               style={{
                 fontSize: '38px',
                 fontWeight: 600,
                 color: '#2d3748',
-                lineHeight: 1.35,
-                letterSpacing: '-0.015em',
               }}
             >
               {tagline}
             </div>
 
-            {/* Features */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '26px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
               {features.map((feature, i) => (
                 <div
                   key={i}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '16px',
-                    fontSize: '26px',
-                    fontWeight: 500,
+                    gap: '12px',
+                    fontSize: '24px',
                     color: '#4a5568',
                     width: features.length <= 2 ? '100%' : '48%',
                   }}
                 >
                   <div
                     style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '11px',
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '8px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '20px',
-                      background: `linear-gradient(135deg, #${gradient[0]} 0%, #${gradient[1]} 100%)`,
+                      fontSize: '18px',
+                      background: gradientBg,
                     }}
                   >
                     {['⚡', '🎯', '📦', '🚀'][i]}
                   </div>
-                  <span>{feature}</span>
+                  <div>{feature}</div>
                 </div>
               ))}
             </div>
 
-            {/* Footer */}
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                paddingTop: '26px',
+                paddingTop: '20px',
                 borderTop: '2px solid rgba(0, 0, 0, 0.08)',
               }}
             >
-              <div
-                style={{
-                  fontSize: '23px',
-                  color: '#718096',
-                  fontWeight: 500,
-                }}
-              >
+              <div style={{ fontSize: '20px', color: '#718096' }}>
                 github.com/{repo || `sylphxltd/${title.toLowerCase()}`}
               </div>
 
-              {repoData && showStats && (
-                <div style={{ display: 'flex', gap: '14px' }}>
+              {repoData && showStats ? (
+                <div style={{ display: 'flex', gap: '12px' }}>
                   <div
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '8px',
+                      gap: '6px',
                       padding: '8px 16px',
-                      borderRadius: '10px',
-                      fontSize: '18px',
+                      borderRadius: '8px',
+                      fontSize: '16px',
                       fontWeight: 600,
-                      background:
-                        'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+                      background: 'rgba(255, 255, 255, 0.9)',
                       border: '1px solid rgba(255, 255, 255, 0.5)',
                       color: '#2d3748',
                     }}
                   >
-                    <span style={{ fontSize: '16px' }}>⭐</span>
-                    <span>{repoData.stargazers_count}</span>
+                    <div>⭐</div>
+                    <div>{repoData.stargazers_count}</div>
                   </div>
 
-                  {repoData.language && (
+                  {repoData.language ? (
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '6px',
                         padding: '8px 16px',
-                        borderRadius: '10px',
-                        fontSize: '18px',
+                        borderRadius: '8px',
+                        fontSize: '16px',
                         fontWeight: 600,
-                        background:
-                          'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+                        background: 'rgba(255, 255, 255, 0.9)',
                         border: '1px solid rgba(255, 255, 255, 0.5)',
                         color: '#2d3748',
                       }}
                     >
-                      <span style={{ fontSize: '16px' }}>📝</span>
-                      <span>{repoData.language}</span>
+                      <div>📝</div>
+                      <div>{repoData.language}</div>
                     </div>
-                  )}
+                  ) : null}
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
@@ -217,14 +193,6 @@ export async function GET(request: NextRequest) {
       {
         width: 1280,
         height: 640,
-        fonts: [
-          {
-            name: 'Inter',
-            data: fontData,
-            style: 'normal',
-            weight: 700,
-          },
-        ],
       }
     );
   } catch (error) {

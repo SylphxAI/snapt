@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
     const radius = 140;
     const innerRadius = 90;
 
-    let currentAngle = -90; // Start from top
+    let currentAngle = -90;
 
     const arcs = languageData.map((lang) => {
       const angle = (lang.percentage / 100) * 360;
@@ -84,13 +84,7 @@ export async function GET(request: NextRequest) {
 
       const largeArc = angle > 180 ? 1 : 0;
 
-      const path = `
-        M ${x1} ${y1}
-        A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}
-        L ${x3} ${y3}
-        A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x4} ${y4}
-        Z
-      `;
+      const path = `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} L ${x3} ${y3} A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x4} ${y4} Z`;
 
       currentAngle = endAngle;
 
@@ -116,40 +110,26 @@ export async function GET(request: NextRequest) {
               borderRadius: '24px',
               padding: '50px 60px',
               width: '1200px',
-              height: '560px',
               display: 'flex',
               flexDirection: 'column',
+              gap: '30px',
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
             }}
           >
-            {/* Header */}
-            <div style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column' }}>
-              <div
-                style={{
-                  fontSize: '32px',
-                  fontWeight: 800,
-                  color: '#1a1a1a',
-                  marginBottom: '8px',
-                }}
-              >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ fontSize: '32px', fontWeight: 800, color: '#1a1a1a' }}>
                 {repoData.name}
               </div>
               <div style={{ fontSize: '18px', color: '#6b7280' }}>Language Distribution</div>
             </div>
 
-            {/* Content */}
-            <div style={{ display: 'flex', gap: '80px', alignItems: 'center', flex: 1 }}>
-              {/* Donut Chart */}
+            <div style={{ display: 'flex', gap: '80px', alignItems: 'center' }}>
               <div style={{ display: 'flex' }}>
-                <svg width="400" height="400" style={{ overflow: 'visible' }}>
+                <svg width="400" height="400">
                   {arcs.map((arc, i) => (
                     <path key={i} d={arc.path} fill={arc.color} />
                   ))}
-
-                  {/* Center circle */}
                   <circle cx={centerX} cy={centerY} r={innerRadius} fill="white" />
-
-                  {/* Center text */}
                   <text
                     x={centerX}
                     y={centerY - 10}
@@ -172,8 +152,7 @@ export async function GET(request: NextRequest) {
                 </svg>
               </div>
 
-              {/* Legend */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', flex: 1 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
                 {languageData.map((lang, i) => (
                   <div
                     key={i}
@@ -181,27 +160,27 @@ export async function GET(request: NextRequest) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: '16px 24px',
+                      padding: '14px 20px',
                       background: '#f9fafb',
-                      borderRadius: '12px',
+                      borderRadius: '10px',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                       <div
                         style={{
-                          width: '16px',
-                          height: '16px',
-                          borderRadius: '4px',
+                          width: '14px',
+                          height: '14px',
+                          borderRadius: '3px',
                           background: lang.color,
                         }}
                       />
-                      <span style={{ fontSize: '22px', fontWeight: 600, color: '#1a1a1a' }}>
+                      <div style={{ fontSize: '20px', fontWeight: 600, color: '#1a1a1a' }}>
                         {lang.name}
-                      </span>
+                      </div>
                     </div>
-                    <span style={{ fontSize: '22px', fontWeight: 700, color: '#667eea' }}>
+                    <div style={{ fontSize: '20px', fontWeight: 700, color: '#667eea' }}>
                       {lang.percentage.toFixed(1)}%
-                    </span>
+                    </div>
                   </div>
                 ))}
               </div>
