@@ -302,10 +302,13 @@ const exampleImage = css({
   overflow: 'hidden',
   border: '1px solid rgba(255, 255, 255, 0.1)',
   marginBottom: '20px',
-  '& img': {
-    width: '100%',
-    display: 'block',
-  },
+});
+
+// NOTE: Silk doesn't support nested selectors like '& img': {...}
+// Use separate classes for child elements (Panda CSS best practice anyway)
+const exampleImg = css({
+  width: '100%',
+  display: 'block',
 });
 
 const codeBlock = css({
@@ -541,6 +544,7 @@ export default function Home() {
               </div>
               <div className={exampleImage}>
                 <img
+                  className={exampleImg}
                   src="/api/banner?title=Snapt&tagline=Transform your GitHub repos into stunning visuals&features=Beautiful,Fast,Easy,Free&gradient=667eea,764ba2&icon=✨&theme=modern"
                   alt="Banner example"
                 />
@@ -565,7 +569,7 @@ export default function Home() {
                 </div>
               </div>
               <div className={exampleImage}>
-                <img src="/api/star-history?repo=sylphxltd/snapt" alt="Star history example" />
+                <img className={exampleImg} src="/api/star-history?repo=sylphxltd/snapt" alt="Star history example" />
               </div>
               <div className={codeBlock}>
                 <code className={code}>/api/star-history?repo=sylphxltd/snapt</code>
@@ -585,7 +589,7 @@ export default function Home() {
                 </div>
               </div>
               <div className={exampleImage}>
-                <img src="/api/languages?repo=sylphxltd/snapt" alt="Language stats example" />
+                <img className={exampleImg} src="/api/languages?repo=sylphxltd/snapt" alt="Language stats example" />
               </div>
               <div className={codeBlock}>
                 <code className={code}>/api/languages?repo=sylphxltd/snapt</code>
