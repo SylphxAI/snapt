@@ -15,7 +15,7 @@
     "@radix-ui/themes": "^3.2.1",
     "@sylphx/babel-plugin-silk": "^2.0.0",
     "@sylphx/silk": "^2.0.2",
-    "@sylphx/silk-nextjs": "^2.1.6",
+    "@sylphx/silk-nextjs": "^2.1.7",
     "@sylphx/silk-react": "^2.0.2",
     "@sylphx/silk-vite-plugin": "^2.0.2",
     "@tailwindcss/postcss": "^4.1.17",

@@ -16,6 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Silk CSS is automatically generated to static/css/silk.css */}
+        <link rel="stylesheet" href="/_next/static/css/silk.css" />
+      </head>
       <body>
         <Theme appearance="dark" accentColor="purple" grayColor="mauve" radius="large">
           {children}

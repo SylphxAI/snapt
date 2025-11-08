@@ -5,7 +5,7 @@ const nextConfig = {
 };
 
 export default withSilk(nextConfig, {
-  inject: true, // 必須自動注入
+  outputFile: 'static/css/silk.css', // Output to static/css for manual link tag
   babelOptions: {
     production: true,
     classPrefix: 'silk',
