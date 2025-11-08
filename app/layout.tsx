@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="/_next/silk.css" />
+        <link rel="stylesheet" href="/_next/static/css/silk.css" />
       </head>
       <body>{children}</body>
     </html>

@@ -5,7 +5,7 @@ const nextConfig = {
 };
 
 export default withSilk(nextConfig, {
-  outputFile: 'silk.css',
+  outputFile: 'static/css/silk.css',
   babelOptions: {
     production: true,
     classPrefix: 'silk',
