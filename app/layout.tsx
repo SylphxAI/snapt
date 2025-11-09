@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './silk.generated.css';
 
 export const metadata: Metadata = {
   title: 'Snapt - Instant visual identity for your GitHub projects',
@@ -14,9 +15,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="stylesheet" href="/_next/static/css/silk.css" />
-      </head>
       <body>{children}</body>
     </html>
   );

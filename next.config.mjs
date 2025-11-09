@@ -1,17 +1,8 @@
 import { withSilk } from '@sylphx/silk-nextjs';
 
-const nextConfig = {
-  turbopack: {},
-};
-
-export default withSilk(nextConfig, {
-  outputFile: 'static/css/silk.css',
-  babelOptions: {
-    production: true,
-    classPrefix: 's',
-  },
-  compression: {
-    brotli: true,
-    gzip: true,
-  },
+export default withSilk({
+  reactStrictMode: true,
+}, {
+  srcDir: './app',
+  debug: true,
 });
