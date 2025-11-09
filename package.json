@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build --webpack",
+    "predev": "silk generate --src ./app -o ./app/silk.generated.css",
+    "dev": "next dev --turbo",
+    "prebuild": "silk generate --src ./app -o ./app/silk.generated.css",
+    "build": "next build",
     "start": "next start",
     "lint": "biome check .",
     "format": "biome format --write .",
@@ -12,7 +14,6 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
-    "@sylphx/babel-plugin-silk": "^2.0.3",
     "@sylphx/silk": "^2.1.0",
     "@sylphx/silk-nextjs": "3.1.0",
     "@sylphx/silk-react": "^2.0.2",
