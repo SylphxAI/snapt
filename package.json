@@ -1,7 +1,18 @@
 {
   "name": "snapt",
   "version": "1.0.0",
+  "description": "GitHub Visual Identity - Auto-generate beautiful Open Graph images for repositories",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SylphxAI/snapt.git"
+  },
+  "homepage": "https://github.com/SylphxAI/snapt#readme",
+  "bugs": {
+    "url": "https://github.com/SylphxAI/snapt/issues"
+  },
+  "author": "Sylphx",
+  "license": "MIT",
   "scripts": {
     "predev": "silk generate --src ./app -o ./app/silk.generated.css",
     "dev": "next dev --turbo",
