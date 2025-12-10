@@ -33,7 +33,7 @@
     "autoprefixer": "^10.4.21",
     "lightningcss": "^1.30.2",
     "lightningcss-darwin-arm64": "1.30.2",
-    "next": "^16.0.2-canary.9",
+    "next": "16.1.0-canary.12",
     "postcss": "^8.5.6",
     "react": "^19.0.0-rc.1",
     "react-dom": "^19.0.0-rc.1",
