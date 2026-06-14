@@ -1,5 +1,5 @@
-import { NextRequest } from 'next/server';
 import { getRepo } from '@/lib/github';
+import type { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
@@ -19,7 +19,10 @@ export async function GET(request: NextRequest) {
       return new Response('Missing required parameters', { status: 400 });
     }
 
-    const features = featuresParam.split(',').map((f) => f.trim()).slice(0, 4);
+    const features = featuresParam
+      .split(',')
+      .map((f) => f.trim())
+      .slice(0, 4);
 
     // Fetch GitHub stats if repo provided
     let repoData = null;
@@ -65,17 +68,19 @@ export async function GET(request: NextRequest) {
         <text x="104" y="250" font-size="38" font-weight="600" fill="#2d3748" font-family="system-ui, sans-serif">${escapeXml(tagline)}</text>
 
         <!-- Features -->
-        ${features.map((feature, i) => {
-          const x = i % 2 === 0 ? 104 : 660;
-          const y = 310 + Math.floor(i / 2) * 70;
-          const emojis = ['⚡', '🎯', '📦', '🚀'];
+        ${features
+          .map((feature, i) => {
+            const x = i % 2 === 0 ? 104 : 660;
+            const y = 310 + Math.floor(i / 2) * 70;
+            const emojis = ['⚡', '🎯', '📦', '🚀'];
 
-          return `
+            return `
             <rect x="${x}" y="${y}" width="36" height="36" rx="8" fill="url(#${gradientId})"/>
             <text x="${x + 18}" y="${y + 26}" font-size="18" text-anchor="middle">${emojis[i]}</text>
             <text x="${x + 50}" y="${y + 26}" font-size="24" fill="#4a5568" font-family="system-ui, sans-serif">${escapeXml(feature)}</text>
           `;
-        }).join('')}
+          })
+          .join('')}
 
         <!-- Footer -->
         <line x1="104" y1="510" x2="1176" y2="510" stroke="rgba(0,0,0,0.08)" stroke-width="2"/>
@@ -84,19 +89,27 @@ export async function GET(request: NextRequest) {
           github.com/${escapeXml(repo || `SylphxAI/${title.toLowerCase()}`)}
         </text>
 
-        ${repoData && showStats ? `
+        ${
+          repoData && showStats
+            ? `
           <rect x="1020" y="525" width="80" height="40" rx="8" fill="rgba(255,255,255,0.9)"
                 stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
           <text x="1030" y="550" font-size="16">⭐</text>
           <text x="1050" y="550" font-size="16" font-weight="600" fill="#2d3748" font-family="system-ui, sans-serif">${repoData.stargazers_count}</text>
 
-          ${repoData.language ? `
+          ${
+            repoData.language
+              ? `
             <rect x="1115" y="525" width="100" height="40" rx="8" fill="rgba(255,255,255,0.9)"
                   stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
             <text x="1125" y="550" font-size="16">📝</text>
             <text x="1145" y="550" font-size="16" font-weight="600" fill="#2d3748" font-family="system-ui, sans-serif">${escapeXml(repoData.language)}</text>
-          ` : ''}
-        ` : ''}
+          `
+              : ''
+          }
+        `
+            : ''
+        }
       </svg>
     `;
 

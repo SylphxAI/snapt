@@ -1,5 +1,5 @@
-import { NextRequest } from 'next/server';
 import { getLanguages, getRepo } from '@/lib/github';
+import type { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
@@ -114,22 +114,24 @@ export async function GET(request: NextRequest) {
 
         <!-- Donut Chart -->
         <g transform="translate(100, 240)">
-          ${arcs.map(arc => `<path d="${arc.path}" fill="${arc.color}"/>`).join('')}
+          ${arcs.map((arc) => `<path d="${arc.path}" fill="${arc.color}"/>`).join('')}
           <circle cx="${centerX}" cy="${centerY}" r="${innerRadius}" fill="white"/>
           <text x="${centerX}" y="${centerY - 10}" font-size="36" font-weight="700" fill="#1a1a1a" text-anchor="middle" font-family="system-ui, sans-serif">${languageData.length}</text>
           <text x="${centerX}" y="${centerY + 25}" font-size="18" fill="#6b7280" text-anchor="middle" font-family="system-ui, sans-serif">Languages</text>
         </g>
 
         <!-- Legend -->
-        ${languageData.map((lang, i) => {
-          const y = 250 + i * 50;
-          return `
+        ${languageData
+          .map((lang, i) => {
+            const y = 250 + i * 50;
+            return `
             <rect x="620" y="${y}" width="600" height="40" rx="10" fill="#f9fafb"/>
             <rect x="634" y="${y + 13}" width="14" height="14" rx="3" fill="${lang.color}"/>
             <text x="660" y="${y + 26}" font-size="20" font-weight="600" fill="#1a1a1a" font-family="system-ui, sans-serif">${escapeXml(lang.name)}</text>
             <text x="1190" y="${y + 26}" font-size="20" font-weight="700" fill="#667eea" text-anchor="end" font-family="system-ui, sans-serif">${lang.percentage.toFixed(1)}%</text>
           `;
-        }).join('')}
+          })
+          .join('')}
       </svg>
     `;
 

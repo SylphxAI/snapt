@@ -24,7 +24,7 @@ interface Contributor {
 }
 
 const GITHUB_API_BASE = 'https://api.github.com';
-const cache = new Map<string, { data: any; timestamp: number }>();
+const cache = new Map<string, { data: unknown; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 function getCached<T>(key: string): T | null {
@@ -35,22 +35,22 @@ function getCached<T>(key: string): T | null {
   return null;
 }
 
-function setCache(key: string, data: any): void {
+function setCache(key: string, data: unknown): void {
   cache.set(key, { data, timestamp: Date.now() });
 }
 
-async function fetchGitHub(path: string): Promise<any> {
+async function fetchGitHub<T>(path: string): Promise<T> {
   const cacheKey = path;
-  const cached = getCached<any>(cacheKey);
+  const cached = getCached<T>(cacheKey);
   if (cached) return cached;
 
-  const headers: HeadersInit = {
-    'Accept': 'application/vnd.github.v3+json',
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github.v3+json',
     'User-Agent': 'Snapt-Image-Generator',
   };
 
   if (process.env.GITHUB_TOKEN) {
-    headers['Authorization'] = `Bearer ${process.env.GITHUB_TOKEN}`;
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
   }
 
   const response = await fetch(`${GITHUB_API_BASE}${path}`, { headers });
@@ -59,19 +59,16 @@ async function fetchGitHub(path: string): Promise<any> {
     throw new Error(`GitHub API error: ${response.statusText}`);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as T;
   setCache(cacheKey, data);
   return data;
 }
 
 export async function getRepo(owner: string, repo: string): Promise<GitHubRepo> {
-  return fetchGitHub(`/repos/${owner}/${repo}`);
+  return fetchGitHub<GitHubRepo>(`/repos/${owner}/${repo}`);
 }
 
-export async function getStarHistory(
-  owner: string,
-  repo: string
-): Promise<StarHistory[]> {
+export async function getStarHistory(owner: string, repo: string): Promise<StarHistory[]> {
   // Fetch stargazers with timestamps
   // GitHub API doesn't provide historical data directly
   // We'll use the stars endpoint with pagination
@@ -106,18 +103,12 @@ export async function getStarHistory(
   return history;
 }
 
-export async function getContributors(
-  owner: string,
-  repo: string
-): Promise<Contributor[]> {
-  return fetchGitHub(`/repos/${owner}/${repo}/contributors?per_page=10`);
+export async function getContributors(owner: string, repo: string): Promise<Contributor[]> {
+  return fetchGitHub<Contributor[]>(`/repos/${owner}/${repo}/contributors?per_page=10`);
 }
 
-export async function getLanguages(
-  owner: string,
-  repo: string
-): Promise<Record<string, number>> {
-  return fetchGitHub(`/repos/${owner}/${repo}/languages`);
+export async function getLanguages(owner: string, repo: string): Promise<Record<string, number>> {
+  return fetchGitHub<Record<string, number>>(`/repos/${owner}/${repo}/languages`);
 }
 
 export function formatNumber(num: number): string {

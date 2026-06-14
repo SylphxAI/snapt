@@ -404,7 +404,8 @@ export default function Home() {
     {
       icon: 'ph:image-fill',
       title: 'Social Banners',
-      description: 'Beautiful 1280×640px banners with live GitHub stats, perfect for social media sharing',
+      description:
+        'Beautiful 1280×640px banners with live GitHub stats, perfect for social media sharing',
       color: '#60a5fa',
     },
     {
@@ -457,8 +458,8 @@ export default function Home() {
           <h1 className={heading}>Snapt</h1>
 
           <p className={description}>
-            Transform your GitHub repositories into <span className={highlight}>stunning visual assets</span> with
-            dynamic image generation
+            Transform your GitHub repositories into{' '}
+            <span className={highlight}>stunning visual assets</span> with dynamic image generation
           </p>
 
           <div className={ctaGroup}>
@@ -503,13 +504,19 @@ export default function Home() {
               <Icon icon="ph:magic-wand-fill" />
               Powerful Features
             </h2>
-            <p className={sectionSubtitle}>Everything you need to create professional GitHub assets</p>
+            <p className={sectionSubtitle}>
+              Everything you need to create professional GitHub assets
+            </p>
           </div>
 
           <div className={featuresGrid}>
-            {features.map((feature, index) => (
-              <div key={index} className={featureCard}>
-                <Icon icon={feature.icon} className={featureIcon} style={{ color: feature.color }} />
+            {features.map((feature) => (
+              <div key={feature.title} className={featureCard}>
+                <Icon
+                  icon={feature.icon}
+                  className={featureIcon}
+                  style={{ color: feature.color }}
+                />
                 <h3 className={featureTitle}>{feature.title}</h3>
                 <p className={featureDescription}>{feature.description}</p>
               </div>
@@ -569,7 +576,11 @@ export default function Home() {
                 </div>
               </div>
               <div className={exampleImage}>
-                <img className={exampleImg} src="/api/star-history?repo=SylphxAI/snapt" alt="Star history example" />
+                <img
+                  className={exampleImg}
+                  src="/api/star-history?repo=SylphxAI/snapt"
+                  alt="Star history example"
+                />
               </div>
               <div className={codeBlock}>
                 <code className={code}>/api/star-history?repo=SylphxAI/snapt</code>
@@ -589,7 +600,11 @@ export default function Home() {
                 </div>
               </div>
               <div className={exampleImage}>
-                <img className={exampleImg} src="/api/languages?repo=SylphxAI/snapt" alt="Language stats example" />
+                <img
+                  className={exampleImg}
+                  src="/api/languages?repo=SylphxAI/snapt"
+                  alt="Language stats example"
+                />
               </div>
               <div className={codeBlock}>
                 <code className={code}>/api/languages?repo=SylphxAI/snapt</code>
@@ -628,7 +643,9 @@ export default function Home() {
               SylphX
             </a>
           </div>
-          <p className={copyright}>Open source • MIT License • Built with Silk, Tailwind & Iconify</p>
+          <p className={copyright}>
+            Open source • MIT License • Built with Silk, Tailwind & Iconify
+          </p>
         </div>
       </footer>
     </main>
