@@ -1,5 +1,5 @@
-import { NextRequest } from 'next/server';
-import { getStarHistory, getRepo } from '@/lib/github';
+import { getRepo, getStarHistory } from '@/lib/github';
+import type { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
@@ -75,13 +75,15 @@ export async function GET(request: NextRequest) {
         <!-- Chart -->
         <g transform="translate(40, 150)">
           <!-- Grid lines -->
-          ${[0, 0.25, 0.5, 0.75, 1].map((percent) => {
-            const y = padding.top + chartHeight - chartHeight * percent;
-            return `
+          ${[0, 0.25, 0.5, 0.75, 1]
+            .map((percent) => {
+              const y = padding.top + chartHeight - chartHeight * percent;
+              return `
               <line x1="${padding.left}" y1="${y}" x2="${padding.left + chartWidth}" y2="${y}" stroke="#e5e7eb" stroke-width="1"/>
               <text x="${padding.left - 15}" y="${y + 5}" font-size="14" fill="#9ca3af" text-anchor="end" font-family="system-ui, sans-serif">${Math.round(maxStars * percent)}</text>
             `;
-          }).join('')}
+            })
+            .join('')}
 
           <!-- Area fill -->
           <path d="${areaPath}" fill="url(#${areaGradientId})"/>
@@ -90,18 +92,23 @@ export async function GET(request: NextRequest) {
           <path d="${pathData}" fill="none" stroke="url(#${lineGradientId})" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
           <!-- Points -->
-          ${points.map(point => `
+          ${points
+            .map(
+              (point) => `
             <circle cx="${point.x}" cy="${point.y}" r="4" fill="#667eea" stroke="white" stroke-width="2"/>
-          `).join('')}
+          `
+            )
+            .join('')}
 
           <!-- X-axis labels -->
           ${points
             .filter((_, i) => i % Math.ceil(points.length / 6) === 0)
-            .map(point => {
+            .map((point) => {
               const date = new Date(point.date);
               const label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
               return `<text x="${point.x}" y="${padding.top + chartHeight + 25}" font-size="14" fill="#9ca3af" text-anchor="middle" font-family="system-ui, sans-serif">${label}</text>`;
-            }).join('')}
+            })
+            .join('')}
         </g>
       </svg>
     `;
