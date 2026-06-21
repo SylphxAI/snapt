@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "repo": "SylphxAI/snapt",
+    "name": "snapt",
+    "lifecycle": "active",
+    "layer": "application",
+    "summary": "Application for generating GitHub visual identity assets including social banners, star history views, and language distribution graphics from GitHub data.",
+    "goals": [
+      "Generate GitHub repository visual assets from documented URL parameters and GitHub API data.",
+      "Keep banner, star-history, language, web UI, and Silk-generated styling behavior coherent in one app.",
+      "Expose only documented API routes, rendering behavior, and configuration to consumers."
+    ],
+    "nonGoals": [
+      "Own GitHub API availability, repository analytics semantics, or consumer product branding strategy.",
+      "Own enterprise doctrine, project manifest schema, org rulesets, rollout issue reconciliation, or shared CI and release policy.",
+      "Encode one repository's special-case visual identity as hidden app behavior."
+    ]
+  },
+  "boundaries": {
+    "owns": [
+      {
+        "name": "snapt-visual-api",
+        "description": "Next.js API routes for generating social banners, star history graphics, language charts, and related visual assets."
+      },
+      {
+        "name": "snapt-web-app",
+        "description": "Web UI, package metadata, app configuration, and runtime behavior for the Snapt visual identity product."
+      },
+      {
+        "name": "snapt-style-generation",
+        "description": "Repository-local Silk styling integration and documented Turbopack/Webpack constraints for generated CSS."
+      }
+    ],
+    "doesNotOwn": [
+      "GitHub API availability, repository analytics semantics, rate-limit policy, or consumer product branding strategy.",
+      "Silk package internals beyond documented generated CSS usage and local integration constraints.",
+      "Enterprise doctrine, project manifest schema, rollout issue reconciliation, org rulesets, or shared delivery policy."
+    ],
+    "publicSurfaces": [
+      {
+        "type": "documentation",
+        "name": "Product README",
+        "location": "README.md"
+      },
+      {
+        "type": "api",
+        "name": "Generated visual asset API routes",
+        "location": "app/api/"
+      },
+      {
+        "type": "api",
+        "name": "Web UI",
+        "location": "app/page.tsx"
+      },
+      {
+        "type": "package-export",
+        "name": "Application package metadata",
+        "location": "package.json"
+      },
+      {
+        "type": "documentation",
+        "name": "Silk integration status",
+        "location": "SILK_STATUS.md"
+      },
+      {
+        "type": "manifest",
+        "name": "Project control-plane manifest",
+        "location": ".doctrine/project.json"
+      }
+    ],
+    "allowedDependencies": [
+      {
+        "repo": "SylphxAI/doctrine",
+        "surface": "project manifest schema, standards, and rollout audit",
+        "direction": "downward"
+      },
+      {
+        "repo": "SylphxAI/silk",
+        "surface": "documented package exports and generated CSS integration",
+        "direction": "peer-public"
+      }
+    ],
+    "forbiddenCouplings": [
+      "Do not encode one downstream repository's special-case branding as hidden Snapt behavior.",
+      "Do not depend on GitHub API internals beyond documented public API behavior and token configuration.",
+      "Do not require consumers to rely on internal rendering implementation details instead of documented routes and parameters.",
+      "Do not publish enterprise process policy from this repository instead of SylphxAI/doctrine."
+    ]
+  },
+  "documentation": {
+    "adr": {
+      "path": "docs/adr/",
+      "status": "planned"
+    },
+    "specs": {
+      "path": "README.md",
+      "status": "present"
+    },
+    "catalog": {
+      "path": ".doctrine/project.json",
+      "status": "present"
+    },
+    "runbooks": {
+      "path": "SILK_STATUS.md",
+      "status": "present"
+    },
+    "generatedReferences": {
+      "path": "docs/reference/",
+      "status": "planned"
+    }
+  },
+  "delivery": {
+    "ciModel": "none",
+    "requiredContexts": [],
+    "deployPath": "No repo-local CI or deployment workflow is declared; use package scripts and the eventual hosting/deploy surface documented by this product.",
+    "productionProof": "Production changes require build evidence, deployed route readback, and generated-image smoke evidence for affected banner, star-history, or language routes; this proof is not yet formalized.",
+    "recoveryClass": "forward-fix-only"
+  },
+  "adoption": {
+    "status": "baseline",
+    "gaps": [
+      {
+        "id": "ci-not-declared",
+        "description": "Declare pull-request validation for build, typecheck, lint, Silk generation, and visual route smoke checks before full adoption.",
+        "owner": "SylphxAI/snapt",
+        "target": "Before full adoption"
+      },
+      {
+        "id": "visual-smoke-runbook-missing",
+        "description": "Document generated-image smoke checks and deployed route readback required for visual asset changes.",
+        "owner": "SylphxAI/snapt",
+        "target": "Before production-grade operation"
+      },
+      {
+        "id": "github-api-contract-missing",
+        "description": "Document GitHub API token, rate-limit, fallback, and failure contracts for generated visual assets.",
+        "owner": "SylphxAI/snapt",
+        "target": "Before commercial-grade operation"
+      }
+    ]
+  }
+}
